@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from managers.SeleniumManager import SeleniumManager
 from scrapers.selenium_scraper import SeleniumScraper
 from scrapers.legrand_scraper import LegrandScraper
@@ -36,6 +36,32 @@ def selenium():
     result = selenium_scraper.scrape_website()
     # selenium_manager.close_driver()
     return f"<h1>Scraped title: {result}</h1>"
+
+
+@app.route("/legrand/<int:product_id>")
+def legrand(product_id):
+    """
+    Route to scap information about the products in the Legrand Website.
+
+    Go to /legrand/<id> to get the information about a product, where the <id> is the ID of the internal
+    reference of the product in the store.
+
+    Args:
+        product_id: Internal ID of the product in the store to search for.
+
+    Returns:
+        JSON with the information of the product if was found.
+        If the product was not found returns a simple page.
+    """
+    legrand_scraper = LegrandScraper(selenium_manager.get_driver())
+    print(f"Searching for: {product_id}\n...")
+    result = legrand_scraper.scrape_product_info(product_id)
+    # selenium_manager.close_driver()
+    #return f"<h1>Search: {product_id}</h1><br /><h1>Result: </h1>{result}"
+    if result != None:
+        return result.to_json()
+    else:
+        return "Product not found"
 
 
 if __name__ == "__main__":
