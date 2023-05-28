@@ -1,5 +1,7 @@
+import urllib.request
+import os
+import pandas as pd
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 from models.product_info import ProductInfo
 
 
@@ -16,35 +18,44 @@ class LegrandScraper:
         """
         self.driver = driver
 
-    def scrape_product_info(self, product_id):
+    def scrape_product_info(self, product_id, reset_data_source):
         """
-        Scraps the product information.
+        Scraps the product information from legrand official website exel.
 
         Args:
+            reset_data_source: Boolean type, if true download again the datasource.
+                If false uses the existing datasource.
             product_id: ID of the product to get the information.
 
         Returns:
             If succeeded, returns an object of ProductInfo type with the information of the products.
             If the product doesn't exist returns None.
         """
-        # Go to website and find the product
-        self.driver.get(f"https://www.legrand.pt/e-catalogo/catalogsearch/result/?q={product_id}")
 
-        # Get the product data
+        filename = "downloads/legrand/legrand.xlsx"
 
-        try:
-            title_element = self.driver.find_element(By.XPATH, "//div[@class='product-title']//div[2]//h1[1]//span[1]")
-            price_element = self.driver.find_element(By.XPATH, "//table[@id='product-attribute-specs-table']//td[1]//span[1]")
-        except NoSuchElementException:
+        if reset_data_source or not os.path.exists(filename):
+            self.driver.get("https://www.legrand.pt/index.php/documentacao/category/3-tabelas-de-precos")
+
+            download_link = self.driver.find_element(By.XPATH, "//div[@class='pd-filename'][1]//div[1]//a")
+
+            download_url = download_link.get_attribute("href")
+
+            os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+            urllib.request.urlretrieve(download_url, filename)
+
+        data_frame = pd.read_excel(filename)
+
+        product_search = data_frame[data_frame.iloc[:, 0].str.lower() == str(product_id).lower()]
+
+        if not product_search.empty:
+            product_info = ProductInfo(
+                str(product_search.iloc[0, 0]),
+                str(product_search.iloc[0, 2]),
+                str(product_search.iloc[0, 1]),
+            )
+
+            return product_info
+        else:
             return None
-
-        # Get the text from the elements
-        title = title_element.text
-        price = price_element.text
-
-        product_info = ProductInfo(title, price)
-
-        # Print the extracted info
-        product_info.print_info()
-
-        return product_info

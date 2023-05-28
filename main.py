@@ -1,8 +1,7 @@
-from flask import Flask, jsonify, abort
+from flask import Flask, request, jsonify, abort
 from managers.SeleniumManager import SeleniumManager
 from scrapers.selenium_scraper import SeleniumScraper
 from scrapers.legrand_scraper import LegrandScraper
-
 
 selenium_manager = SeleniumManager()
 selenium_manager.setup_driver()
@@ -39,7 +38,7 @@ def selenium():
     return f"<h1>Scraped title: {result}</h1>"
 
 
-@app.route("/legrand/<int:product_id>")
+@app.route("/legrand/<product_id>")
 def legrand(product_id):
     """
     Route to scap information about the products in the Legrand Website.
@@ -54,12 +53,22 @@ def legrand(product_id):
         JSON with the information of the product if was found.
         If the product was not found returns a simple page.
     """
+
+    reset_data_source = request.args.get("resetDataSource", default="False")
+
+    if reset_data_source.lower() == "true":
+        reset_data_source = True
+    else:
+        reset_data_source = False
+
+    print(reset_data_source)
+
     legrand_scraper = LegrandScraper(selenium_manager.get_driver())
 
     print(f"Getting Legrand product info for ID {product_id} ...")
-    result = legrand_scraper.scrape_product_info(product_id)
+    result = legrand_scraper.scrape_product_info(product_id, reset_data_source)
 
-    if result != None:
+    if result is not None:
         print(f"Legrand product with ID {product_id} found")
         return result.to_json()
     else:
@@ -69,6 +78,15 @@ def legrand(product_id):
 
 @app.errorhandler(404)
 def handle_404(error):
+    """
+    Handle the Flask 404 error when a product is not found.
+
+    Args:
+        error: Error information.
+
+    Returns:
+        404 error min JSON format.
+    """
     response = {
         "error": "Page not found",
         "message": error.description

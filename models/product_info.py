@@ -7,7 +7,7 @@ class ProductInfo:
 
     It has the information about a product.
     """
-    def __init__(self, name, price):
+    def __init__(self, reference, name, price):
         """
         Initializes the product attributes.
 
@@ -15,6 +15,7 @@ class ProductInfo:
             name: Name of the product.
             price: Price of the product.
         """
+        self.reference = reference
         self.name = name
         self.price = price
 
@@ -24,7 +25,9 @@ class ProductInfo:
 
         Shows the attributes of the product.
         """
-        print(f"{self.name}\n{self.price}")
+        print("-------------------------")
+        print(f"Reference: {self.reference}\nName: {self.name}\nPrice: {self.price}")
+        print("-------------------------")
 
     def to_json(self):
         """
@@ -36,6 +39,7 @@ class ProductInfo:
             JSON object with the information of the product.
         """
         product_info = {
+            "reference": self.reference,
             "name": self.name,
             "price": self.price
         }
