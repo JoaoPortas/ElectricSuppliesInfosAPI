@@ -5,21 +5,29 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class SeleniumManager:
     """
-    Manages de selenium instance.
+    Manages the selenium instance.
 
-    Manges the selenium instance.
+    Manages the selenium instance using a Singleton pattern.
     """
+    _instance = None
+
     def __init__(self):
-        """
-        Initialize the driver of selenium as None.
-        """
         self.driver = None
+        if SeleniumManager._instance is None:
+            self.setup_driver()
+            print("no instance yet")
+        else:
+            self.driver = SeleniumManager._instance
+            print("already exists")
 
     def setup_driver(self):
         """
-        Setups the driver to be used by selenium what is currently the chrome.
+        Setups the driver to be used by selenium, currently using Chrome.
         """
         self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+
+        if SeleniumManager._instance is None:
+            SeleniumManager._instance = self.driver
 
     def get_driver(self):
         """
