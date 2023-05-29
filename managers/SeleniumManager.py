@@ -15,10 +15,8 @@ class SeleniumManager:
         self.driver = None
         if SeleniumManager._instance is None:
             self.setup_driver()
-            print("no instance yet")
         else:
             self.driver = SeleniumManager._instance
-            print("already exists")
 
     def setup_driver(self):
         """

@@ -22,7 +22,6 @@ def legrand(product_id):
     """
 
     selenium_manager = SeleniumManager()
-    print("entered")
 
     reset_data_source = request.args.get("resetDataSource", default="False")
 
@@ -30,8 +29,6 @@ def legrand(product_id):
         reset_data_source = True
     else:
         reset_data_source = False
-
-    print(reset_data_source)
 
     legrand_scraper = LegrandScraper(selenium_manager.get_driver())
 

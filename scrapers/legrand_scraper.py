@@ -7,7 +7,7 @@ from models.product_info import ProductInfo
 
 class LegrandScraper:
     """
-    Allows to scrap information about the products for the Legrand website.
+    Allows to scrap information about the products for the Legrand brand.
     """
     def __init__(self, driver):
         """
