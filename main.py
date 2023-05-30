@@ -15,6 +15,7 @@ app.register_blueprint(hager_bp, url_prefix="/hager")
 app.register_blueprint(jsl_bp, url_prefix="/jsl")
 app.register_blueprint(obo_bettermann_bp, url_prefix="/obo-bettermann")
 app.register_blueprint(televes_bp, url_prefix="/televes")
+app.register_blueprint(tev2_bp, url_prefix="/tev2")
 
 
 @app.route("/")

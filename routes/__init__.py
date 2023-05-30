@@ -9,3 +9,4 @@ from .hager_routes import hager_bp
 from .jsl_routes import jsl_bp
 from .obo_bettermann_routes import obo_bettermann_bp
 from .televes_routes import televes_bp
+from .tev2_routes import tev2_bp
