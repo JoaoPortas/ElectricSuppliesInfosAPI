@@ -9,6 +9,7 @@ app.register_blueprint(legrand_bp, url_prefix="/legrand")
 app.register_blueprint(efapel_bp, url_prefix="/efapel")
 app.register_blueprint(abb_bp, url_prefix="/abb")
 app.register_blueprint(al_bp, url_prefix="/al")
+app.register_blueprint(fermax_bp, url_prefix="/fermax")
 
 
 @app.route("/")

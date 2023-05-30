@@ -5,9 +5,9 @@ from selenium.webdriver.common.by import By
 from models.product_info import ProductInfo
 
 
-class ABBScraper:
+class FermaxScraper:
     """
-        Allows to scrap information about the products for the ABB brand.
+        Allows to scrap information about the products for the Fermax brand.
     """
 
     def __init__(self, driver):
@@ -21,7 +21,7 @@ class ABBScraper:
 
     def scrape_product_info(self, product_id, reset_data_source):
         """
-        Scraps ABB product information from caiado website.
+        Scraps Fermax product information from caiado website.
 
         Args:
             reset_data_source: Boolean type, if true download again the datasource.
@@ -33,10 +33,10 @@ class ABBScraper:
             If the product doesn't exist returns None.
         """
 
-        filename = "downloads/abb/caiado_abb.xlsx"
+        filename = "downloads/abb/caiado_fermax.xlsx"
 
         if reset_data_source or not os.path.exists(filename):
-            self.driver.get("https://www.caiado.pt/abb")
+            self.driver.get("https://www.caiado.pt/fermax")
 
             download_link = self.driver.find_element(By.XPATH, "//li[@class='image-catalogo'][1]//div[2]"
                                                                "//div[1]//div[2]//a")
