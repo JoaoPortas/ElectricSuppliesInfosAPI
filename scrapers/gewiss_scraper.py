@@ -5,9 +5,9 @@ from selenium.webdriver.common.by import By
 from models.product_info import ProductInfo
 
 
-class FermaxScraper:
+class GewissScraper:
     """
-        Allows to scrap information about the products for the Fermax brand.
+        Allows to scrap information about the products for the Gewiss brand.
     """
 
     def __init__(self, driver):
@@ -21,7 +21,7 @@ class FermaxScraper:
 
     def scrape_product_info(self, product_id, reset_data_source):
         """
-        Scraps Fermax product information from caiado website.
+        Scraps Gewiss product information from caiado website.
 
         Args:
             reset_data_source: Boolean type, if true download again the datasource.
@@ -33,10 +33,10 @@ class FermaxScraper:
             If the product doesn't exist returns None.
         """
 
-        filename = "downloads/fermax/caiado_fermax.xlsx"
+        filename = "downloads/gewiss/caiado_gewiss.xlsx"
 
         if reset_data_source or not os.path.exists(filename):
-            self.driver.get("https://www.caiado.pt/fermax")
+            self.driver.get("https://www.caiado.pt/gewiss")
 
             download_link = self.driver.find_element(By.XPATH, "//li[@class='image-catalogo'][1]//div[2]"
                                                                "//div[1]//div[2]//a")
