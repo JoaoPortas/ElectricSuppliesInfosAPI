@@ -6,7 +6,7 @@ hager_bp = Blueprint("hager", __name__)
 
 
 @hager_bp.route("/<product_id>")
-def efapel(product_id):
+def hager(product_id):
     """
     Route to scap information about the products in the caiado Website.
 

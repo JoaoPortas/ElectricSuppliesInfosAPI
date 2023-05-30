@@ -1,16 +1,16 @@
 from flask import Blueprint, request, abort
-from scrapers.fermax_scraper import FermaxScraper
+from scrapers.jsl_scraper import JSLScraper
 from managers.SeleniumManager import SeleniumManager
 
-fermax_bp = Blueprint("fermax", __name__)
+jsl_bp = Blueprint("jsl", __name__)
 
 
-@fermax_bp.route("/<product_id>")
-def fermax(product_id):
+@jsl_bp.route("/<product_id>")
+def jsl(product_id):
     """
     Route to scap information about the products in the caiado Website.
 
-    Go to /fermax/<id> to get the information about a product, where the <id> is the ID of the internal
+    Go to /jsl/<id> to get the information about a product, where the <id> is the ID of the internal
     reference of the product in the store.
 
     Args:
@@ -30,14 +30,14 @@ def fermax(product_id):
     else:
         reset_data_source = False
 
-    efapel_scraper = FermaxScraper(selenium_manager.get_driver())
+    efapel_scraper = JSLScraper(selenium_manager.get_driver())
 
-    print(f"Getting AL product info for ID {product_id} ...")
+    print(f"Getting JSL product info for ID {product_id} ...")
     result = efapel_scraper.scrape_product_info(product_id, reset_data_source)
 
     if result is not None:
-        print(f"AL product with ID {product_id} found")
+        print(f"JSL product with ID {product_id} found")
         return result.to_json()
     else:
-        print(f"AL product with ID {product_id} not found!")
+        print(f"JSL product with ID {product_id} not found!")
         abort(404, "Product not found")

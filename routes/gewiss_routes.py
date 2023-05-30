@@ -6,7 +6,7 @@ gewiss_bp = Blueprint("gewiss", __name__)
 
 
 @gewiss_bp.route("/<product_id>")
-def efapel(product_id):
+def gewiss(product_id):
     """
     Route to scap information about the products in the caiado Website.
 

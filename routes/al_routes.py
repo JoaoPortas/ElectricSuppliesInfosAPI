@@ -6,7 +6,7 @@ al_bp = Blueprint("al", __name__)
 
 
 @al_bp.route("/<product_id>")
-def efapel(product_id):
+def al(product_id):
     """
     Route to scap information about the products in the caiado Website.
 

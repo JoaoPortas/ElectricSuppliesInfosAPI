@@ -6,3 +6,4 @@ from .al_routes import al_bp
 from .fermax_routes import fermax_bp
 from .gewiss_routes import gewiss_bp
 from .hager_routes import hager_bp
+from .jsl_routes import jsl_bp
