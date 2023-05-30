@@ -1,9 +1,6 @@
 from flask import Flask
-from routes.error_handlers import error_handlers_bp
-from routes.legrand_routes import legrand_bp
-from routes.efapel_routes import efapel_bp
-from routes.abb_routes import abb_bp
-from routes.al_routes import al_bp
+from routes import *
+
 
 app = Flask(__name__)
 
