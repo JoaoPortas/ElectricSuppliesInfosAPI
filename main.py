@@ -13,6 +13,7 @@ app.register_blueprint(fermax_bp, url_prefix="/fermax")
 app.register_blueprint(gewiss_bp, url_prefix="/gewiss")
 app.register_blueprint(hager_bp, url_prefix="/hager")
 app.register_blueprint(jsl_bp, url_prefix="/jsl")
+app.register_blueprint(obo_bettermann_bp, url_prefix="/obo-bettermann")
 
 
 @app.route("/")

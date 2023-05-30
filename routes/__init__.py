@@ -7,3 +7,4 @@ from .fermax_routes import fermax_bp
 from .gewiss_routes import gewiss_bp
 from .hager_routes import hager_bp
 from .jsl_routes import jsl_bp
+from .obo_bettermann_routes import obo_bettermann_bp
